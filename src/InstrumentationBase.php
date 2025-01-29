@@ -43,8 +43,13 @@ abstract class InstrumentationBase {
    *
    * @throws \ReflectionException If the method does not exist
    */
-  protected static function resolveMethodParameters(string $className, string $methodName): array {
-    $reflMethod = new \ReflectionMethod($className, $methodName);
+  protected static function resolveMethodParameters(?string $className, string $methodName): array {
+    if ($className) {
+      $reflMethod = new \ReflectionMethod($className, $methodName);
+    }
+    else {
+      $reflMethod = new \ReflectionFunction($methodName);
+    }
     $parameterPositions = [];
     foreach ($reflMethod->getParameters() as $position => $parameter) {
       $parameterPositions[$parameter->getName()] = $position;
