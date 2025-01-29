@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace OpenTelemetry\Contrib\Instrumentation\Drupal;
 
 use OpenTelemetry\API\Instrumentation\CachedInstrumentation;
-use OpenTelemetry\API\Trace\SpanBuilderInterface;
-use OpenTelemetry\SemConv\TraceAttributes;
 
 class IOInstrumentation extends InstrumentationBase {
   public const NAME = 'io';
@@ -37,9 +35,17 @@ class IOInstrumentation extends InstrumentationBase {
     $operations = [
       'fopen' => [
         'params' => ['filename', 'mode'],
+        'returnValue' => 'stream',
       ],
-      'fwrite' => [],
-      'fread' => [],
+      'fwrite' => [
+        'params' => ['stream'],
+      ],
+      'fread' => [
+        'params' => ['stream'],
+      ],
+      'fclose' => [
+        'params' => ['stream'],
+      ],
       'file_get_contents' => [
         'params' => ['filename'],
       ],
