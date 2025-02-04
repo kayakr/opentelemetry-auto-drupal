@@ -39,12 +39,14 @@ class IOInstrumentation extends InstrumentationBase {
       ],
       'fwrite' => [
         'params' => ['stream'],
+        'returnValue' => 'count',
       ],
       'fread' => [
         'params' => ['stream'],
       ],
       'fclose' => [
         'params' => ['stream'],
+        'returnValue' => 'success',
       ],
       'file_get_contents' => [
         'params' => ['filename'],
