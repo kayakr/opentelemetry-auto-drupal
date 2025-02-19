@@ -8,6 +8,7 @@ use OpenTelemetry\Contrib\Instrumentation\Drupal\DrupalAutoRootSpan;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\DrupalKernelInstrumentation;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\EntityInstrumentation;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\InstrumentModules;
+use OpenTelemetry\Contrib\Instrumentation\Drupal\IOInstrumentation;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\HttpClientCallInstrumentation;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\HttpClientRequestInstrumentation;
 use OpenTelemetry\Contrib\Instrumentation\Drupal\ViewsInstrumentation;
@@ -41,6 +42,9 @@ try {
   HttpClientRequestInstrumentation::register();
   HttpClientCallInstrumentation::register();
   InstrumentModules::registerModule(ViewsInstrumentation::class);
+  if (!Sdk::isInstrumentationDisabled(IOInstrumentation::NAME)) {
+    IOInstrumentation::register();
+  }
 }
 catch (Throwable $exception) {
   throw $exception;
